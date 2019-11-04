@@ -109,7 +109,24 @@ public class ObligSBinTre<T> implements Beholder<T>
   
   public int antall(T verdi)
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+    if(verdi == null) return 0;
+
+    Node<T> p = rot;
+    int antallAvVerdi = 0;
+
+    while(p != null){
+        int cmp = comp.compare(verdi, p.verdi);
+        if(cmp < 0){
+            p = p.venstre;
+        }
+        else{
+            if (cmp == 0){
+                antallAvVerdi++;
+            }
+            p = p.høyre;
+        }
+    }
+    return antallAvVerdi;
   }
   
   @Override
@@ -203,12 +220,15 @@ public class ObligSBinTre<T> implements Beholder<T>
   } // BladnodeIterator
 
   public static void main(String[] args) {
-    Integer[] a = {4,7,2,9,5,10,8,1,3,6};
+    Integer[] a = {4,7,2,9,5,10,8,1,3,6,4,4,4,4};
     ObligSBinTre<Integer> tre = new ObligSBinTre<>(Comparator.naturalOrder());
     for (int verdi : a){
       tre.leggInn(verdi);
     }
     System.out.println(tre.antall());
+      System.out.println(tre.antall(5));
+      System.out.println(tre.antall(4));
+      System.out.println(tre.antall(-55));
   }
 
 } // ObligSBinTre
