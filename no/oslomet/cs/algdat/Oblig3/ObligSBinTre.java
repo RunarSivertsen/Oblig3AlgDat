@@ -2,9 +2,10 @@ package no.oslomet.cs.algdat.Oblig3;
 
 ////////////////// ObligSBinTre /////////////////////////////////
 
-import java.util.*;
-
-import static java.util.Comparator.naturalOrder;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.StringJoiner;
 
 public class ObligSBinTre<T> implements Beholder<T>
 {
@@ -89,7 +90,9 @@ public class ObligSBinTre<T> implements Beholder<T>
 
     return false;
   }
-  
+
+
+
   @Override
   public boolean fjern(T verdi)
   {
@@ -140,17 +143,48 @@ public class ObligSBinTre<T> implements Beholder<T>
   {
     throw new UnsupportedOperationException("Ikke kodet ennå!");
   }
-  
-  private static <T> Node<T> nesteInorden(Node<T> p)
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+
+  //Oppg 3
+  private static <T> Node<T> nesteInorden(Node<T> p) {
+    if (p.høyre != null)
+    {
+      p = p.høyre;
+      while (p.venstre != null) p = p.venstre;
+    }
+    else
+    {
+      while (p.forelder != null && p == p.forelder.høyre)
+      {
+        p = p.forelder;
+      }
+
+      p = p.forelder;
+    }
+
+    return p;
+    //throw new UnsupportedOperationException("Ikke kodet ennå!");
   }
   
   @Override
-  public String toString()
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+  public String toString() {
+    if (tom()) return "[]";
+
+    StringJoiner s = new StringJoiner(", ", "[", "]");
+
+    Node<T> p = rot;  // går til den første i inorden
+    while (p.venstre != null) p = p.venstre;
+
+    while (p != null)
+    {
+      s.add(p.verdi.toString());
+      p = nesteInorden(p);
+    }
+
+    return s.toString();
+    //throw new UnsupportedOperationException("Ikke kodet ennå!");
   }
+  // slutt Oppg 3
   
   public String omvendtString()
   {
