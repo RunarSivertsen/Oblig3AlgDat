@@ -7,4 +7,5 @@ Denne oppgaven er en innlevering i Algoritmer og Datastrukturer. Oppgaven er lev
 
 
 Arbeidsfordeling:
+
 Runar har hatt hovedansvar for oppgave 1, 2, 5, 6 og 7
