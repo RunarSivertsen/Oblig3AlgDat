@@ -2,10 +2,7 @@ package no.oslomet.cs.algdat.Oblig3;
 
 ////////////////// ObligSBinTre /////////////////////////////////
 
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class ObligSBinTre<T> implements Beholder<T>
 {
@@ -395,9 +392,14 @@ public class ObligSBinTre<T> implements Beholder<T>
     
     private BladnodeIterator()  // konstruktør
     {
-
+      if (tom()) return;
+      //p = førsteBladnode(rot);  // bruker en hjelpemetode
+      q = null;
+      removeOK = false;
+      iteratorendringer = endringer;
     }
-    
+
+
     @Override
     public boolean hasNext()
     {
@@ -407,13 +409,24 @@ public class ObligSBinTre<T> implements Beholder<T>
     @Override
     public T next()
     {
-      throw new UnsupportedOperationException("Ikke kodet ennå!");
+      if (!hasNext()) throw new NoSuchElementException("Ikke flere bladnodeverdier!");
+
+      if (endringer != iteratorendringer) throw new
+              ConcurrentModificationException("Treet har blitt endret!");
+
+      removeOK = true;
+      //q = p; p = nesteBladnode(p);  // bruker en hjelpemetode
+
+      return q.verdi;
+      //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
     
     @Override
     public void remove()
     {
-      throw new UnsupportedOperationException("Ikke kodet ennå!");
+      removeOK = false;
+
+      //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
   } // BladnodeIterator
