@@ -373,13 +373,73 @@ public class ObligSBinTre<T> implements Beholder<T>
 
   public String bladnodeverdier()
   {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+      if (tom()) return "[]";
+      StringJoiner s = new StringJoiner(", ", "[", "]");
+      bladnodeverdier(rot, s);
+      return s.toString();
   }
-  
-  public String postString()
-  {
-    throw new UnsupportedOperationException("Ikke kodet ennå!");
+
+    private static <T> void bladnodeverdier(Node<T> p, StringJoiner s)
+    {
+        if (p.venstre == null && p.høyre == null){
+            s.add(p.verdi.toString());
+        }
+        if (p.venstre != null){
+            bladnodeverdier(p.venstre, s);
+        }
+        if (p.høyre != null){
+            bladnodeverdier(p.høyre, s);
+        }
+    }
+
+    private static <T> Node<T> førsteNode(Node<T> p)
+    {
+        while (true){
+            if (p.venstre != null){
+                p = p.venstre;
+            }
+            else if (p.høyre != null){
+                p = p.høyre;
+            }
+            else return p;
+        }
+    }
+
+    public String postString()
+    {
+      if (tom()) return "[]";
+
+      StringJoiner sj = new StringJoiner(", ", "[", "]");
+
+      Node<T> p = førsteNode(rot);
+
+      while (true){
+          sj.add(p.verdi.toString());
+
+          if (p.forelder == null){
+              break;
+          }
+
+          Node<T> f = p.forelder;
+
+          if (p == f.høyre || f.høyre == null){
+              p = f;
+          }
+          else{
+              p = førsteNode(f.høyre);
+          }
+      }
+      return sj.toString();
   }
+
+    private static <T> Node<T> nesteNode(Node<T> p)
+    {
+        Node<T> f = p.forelder;
+        while (f != null && (p == f.høyre || f.høyre == null)){
+            p = f; f = f.forelder;
+        }
+        return f == null ? null : førsteNode(f.høyre);
+    }
   
   @Override
   public Iterator<T> iterator()
