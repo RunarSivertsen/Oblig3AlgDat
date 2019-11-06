@@ -1,6 +1,7 @@
 package no.oslomet.cs.algdat.Oblig3;
 
 //Jørgen Røkke BEnder s331368
+//Runar Sivertsen s331414
 
 ////////////////// ObligSBinTre /////////////////////////////////
 
@@ -508,17 +509,5 @@ public class ObligSBinTre<T> implements Beholder<T>
     }
 
   } // BladnodeIterator
-
-  public static void main(String[] args) {
-    Integer[] a = {4,7,2,9,5,10,8,1,3,6,4,4,4,4};
-    ObligSBinTre<Integer> tre = new ObligSBinTre<>(Comparator.naturalOrder());
-    for (int verdi : a){
-      tre.leggInn(verdi);
-    }
-    System.out.println(tre.antall());
-      System.out.println(tre.antall(5));
-      System.out.println(tre.antall(4));
-      System.out.println(tre.antall(-55));
-  }
 
 } // ObligSBinTre
