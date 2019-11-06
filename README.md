@@ -8,4 +8,5 @@ Denne oppgaven er en innlevering i Algoritmer og Datastrukturer. Oppgaven er lev
 
 Arbeidsfordeling:
 
-Runar har hatt hovedansvar for oppgave 1, 2, 5, 6 og 7
+Runar har hatt hovedansvar for oppgave 1, 2, 5, 6, 7 og 8
+Jørgen har hatt hovedansvar for oppgave 3, 4, 9 og 10
