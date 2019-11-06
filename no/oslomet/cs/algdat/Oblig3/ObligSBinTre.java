@@ -1,5 +1,7 @@
 package no.oslomet.cs.algdat.Oblig3;
 
+//Jørgen Røkke BEnder s331368
+
 ////////////////// ObligSBinTre /////////////////////////////////
 
 import java.util.*;
