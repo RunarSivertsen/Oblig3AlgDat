@@ -67,6 +67,7 @@ public class ObligSBinTre<T> implements Beholder<T>
     else q.høyre = p;                        // høyre barn til q
 
     antall++;                                // én verdi mer i treet
+    endringer++;                             // en endring
     return true;                             // vellykket innlegging
   }
   
@@ -453,7 +454,7 @@ public class ObligSBinTre<T> implements Beholder<T>
     private BladnodeIterator()  // konstruktør
     {
       if (tom()) return;
-      //p = førsteBladnode(rot);  // bruker en hjelpemetode
+      p = førsteNode(rot);  // bruker en hjelpemetode
       q = null;
       removeOK = false;
       iteratorendringer = endringer;
@@ -475,7 +476,7 @@ public class ObligSBinTre<T> implements Beholder<T>
               ConcurrentModificationException("Treet har blitt endret!");
 
       removeOK = true;
-      //q = p; p = nesteBladnode(p);  // bruker en hjelpemetode
+      q = p; p = nesteNode(p);  // bruker en hjelpemetode
 
       return q.verdi;
       //throw new UnsupportedOperationException("Ikke kodet ennå!");
@@ -484,8 +485,23 @@ public class ObligSBinTre<T> implements Beholder<T>
     @Override
     public void remove()
     {
-      removeOK = false;
+        if (!removeOK) throw
+                new IllegalStateException("Ulovlig kall!");
 
+        if (endringer != iteratorendringer) throw new
+                ConcurrentModificationException("Treet er bltt endret!");
+
+        removeOK = false;
+
+        Node<T> f = q.forelder;
+
+        if (f == null) rot = null;
+        else if (q == f.venstre) f.venstre = null;
+        else f.høyre = null;
+
+        antall--;             // verdi er fjernet
+        endringer++;          // en endring i treet
+        iteratorendringer++;  // en endring gjort av iteratoren
       //throw new UnsupportedOperationException("Ikke kodet ennå!");
     }
 
